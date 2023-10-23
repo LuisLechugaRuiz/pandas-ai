@@ -419,21 +419,23 @@ class SmartDataframe(DataframeAbstract, Shortcuts):
 
     def _get_sample_head(self) -> DataFrameType:
         head = None
-        rows_to_display = 0 if self.lake.config.enforce_privacy else 5
         if self._sample_head is not None:
             head = self.sample_head
         elif not self._core._df_loaded and self.connector:
             head = self.connector.head()
-        else:
+        elif not self.show_full_dfs:
+            rows_to_display = 0 if self.lake.config.enforce_privacy else 5
             head = self.dataframe.head(rows_to_display)
+            sampler = DataSampler(head)
+            head = sampler.sample(rows_to_display)
+            head = self._truncate_head_columns(head)
+        else:
+            head = self.dataframe  # show full dataframe
 
         if head is None:
             return None
 
-        sampler = DataSampler(head)
-        sampled_head = sampler.sample(rows_to_display)
-
-        return self._truncate_head_columns(sampled_head)
+        return head
 
     def _load_from_config(self, name: str):
         """
@@ -599,6 +601,14 @@ class SmartDataframe(DataframeAbstract, Shortcuts):
     @enforce_privacy.setter
     def enforce_privacy(self, enforce_privacy: bool):
         self.lake.enforce_privacy = enforce_privacy
+
+    @property
+    def show_full_dfs(self):
+        return self.lake.show_full_dfs
+
+    @show_full_dfs.setter
+    def show_full(self, show_full_dfs: bool):
+        self.lake.show_full_dfs = show_full_dfs
 
     @property
     def enable_cache(self):

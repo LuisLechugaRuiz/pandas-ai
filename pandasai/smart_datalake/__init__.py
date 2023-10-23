@@ -513,6 +513,14 @@ class SmartDatalake:
         self._config.enforce_privacy = enforce_privacy
 
     @property
+    def show_full_dfs(self):
+        return self._config.show_full_dfs
+
+    @show_full_dfs.setter
+    def show_full_dfs(self, show_full_dfs: bool):
+        self._config.show_full_dfs = show_full_dfs
+
+    @property
     def enable_cache(self):
         return self._config.enable_cache
 

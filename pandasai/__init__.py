@@ -108,6 +108,7 @@ class PandasAI:
         enforce_privacy=False,
         save_charts=False,
         save_charts_path="",
+        show_full_dfs=False,
         enable_cache=True,
         middlewares=None,
         custom_whitelisted_dependencies=None,
@@ -130,6 +131,7 @@ class PandasAI:
             Default to False
             enable_cache (bool): Enable the cache to store the results.
             Default to True
+            show_full_dfs (bool): Show the full dataframe in the code.
             middlewares (list): List of middlewares to be used. Default to None
             custom_whitelisted_dependencies (list): List of custom dependencies to
             be used. Default to None
@@ -153,6 +155,7 @@ class PandasAI:
             enforce_privacy=enforce_privacy,
             save_charts=save_charts,
             save_charts_path=save_charts_path,
+            show_full_dfs=show_full_dfs,
             enable_cache=enable_cache,
             middlewares=middlewares or [],
             custom_whitelisted_dependencies=custom_whitelisted_dependencies or [],

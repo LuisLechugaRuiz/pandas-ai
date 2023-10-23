@@ -19,6 +19,7 @@ class Config(BaseModel):
     open_charts: bool = True
     save_charts: bool = False
     save_charts_path: str = "exports/charts"
+    show_full_dfs: bool = False
     custom_whitelisted_dependencies: List[str] = Field(default_factory=list)
     max_retries: int = 3
     middlewares: List[Middleware] = Field(default_factory=list)
